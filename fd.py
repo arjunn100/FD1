@@ -1,13 +1,26 @@
 import streamlit as st
 from datetime import datetime
 
-# Initialize session state
+# Initialize session state for login status
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
 
 # Title of the App
 st.title("ServDish - Your Personal Chef at Home")
 
+# Login Page
+if not st.session_state.logged_in:
+    st.header("Login")
+    mobile_number = st.text_input("Mobile Number")
+    gmail_account = st.text_input("Gmail Account")
+    x_account = st.text_input("X Account (formerly Twitter)")
+    login_button = st.button("Login")
+
+    if login_button:
+        st.session_state.logged_in = True
+        st.success("Logged in successfully!")
+
+# Main App after Login
 if st.session_state.logged_in:
     # User Profile Setup
     st.header("Profile Setup")
@@ -74,14 +87,6 @@ if st.session_state.logged_in:
             if st.button("Make Payment"):
                 st.success(f"Payment method selected: {selected_payment_mode}. Your order is now complete!")
 
-else:
-    # Login Page
-    st.header("Login")
-    mobile_number = st.text_input("Mobile Number")
-    gmail_account = st.text_input("Gmail Account")
-    x_account = st.text_input("X Account (formerly Twitter)")
-    login_button = st.button("Login")
-
-    if login_button:
-        st.session_state.logged_in = True
-        st.success("Logged in successfully!")
+# Footer
+st.write("---")
+st.write("Thank you for using ServDish!")
